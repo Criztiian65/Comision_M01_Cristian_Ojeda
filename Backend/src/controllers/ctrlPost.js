@@ -1,30 +1,49 @@
-import { validationResult } from "express-validator";
 import { PostModel } from "../Model/PostModel.js";
+import { UserModel } from "../Model/UsersModel.js";
 
 // Creacion de un post
 export const ctrlNewPost = async (req, res) => {
-  // const errors = validationResult(req)
-  // if (errors) {
-  //     return res.status(400).json(errors)
-  // }
+  console.log( 'estamos en el controlador ', req.user._id);
+  const author = req.user._id
+  const {title, description, imageURL}= req.body
+  
+  try {
+  const newPost = new PostModel({
+    title,
+    description,
+    imageURL,
+    author: author
+  })
+ 
+    // Guardado en PostModel
+    await newPost.save()
 
- try {
-    const newPost = await PostModel.create(req.body);
-    res.status(201).json(newPost);
+    // Guardado en el array de UserModel
+    const user = await UserModel.findById(author) 
+    user.posts.push(newPost) 
+    await user.save()
+
+   return res.status(201).json({newPost});
+    
+    
  } catch (error) {
-    console.log(error);
-    res.sendStatus(500)
+    return res.status(500).json({ error: Error.message  });
  }
 
 };
 
-// Obtener todos los post
-export const ctrlGetAllPosts = async (req, res) => {
-    try {
-        const allPost = await PostModel.find();
-        res.status(201).json(allPost);
+
+// Obtener todos los post propios
+export const ctrlGetAllPostsUser = async (req, res) => {
+  
+  const user = req.user
+    
+  try {
+        const allPost = await PostModel.find({author: user._id}); // esto busca los post de un solo usuario
+        res.status(200).json({allPost});
+        
      } catch (error) {
-        console.log(error);
+        console.error(error);
         res.sendStatus(500)
      }
 };
@@ -56,13 +75,15 @@ export const ctrlDeletePost = async (req, res) => {
   }
 }
 
-// Buscar un post
-export const ctrlGetOnePost = async (req, res) => {
+// Buscar todos los post
+export const ctrlGetAllPost = async (req, res) => {
+  const user = req.user
   const postId = req.params
 
   try {
-    const onePost = await PostModel.findById(postId)
-    res.json(onePost)
+
+    const allPost = await PostModel.findById()
+    res.json({allPost, user, postId})
 
   } catch (error) {
     console.log(error);

@@ -4,14 +4,23 @@ import { Schema, model } from "mongoose";
 
 const commentSchema = new Schema({
   author: {
-    type: String,
-    unique: true,
+    type: Schema.Types.ObjectId,
     required: true,
+    ref: 'User'
   },
   description: {
     type: String,
     required: true,
+  },
+  post: {
+    type: Schema.Types.ObjectId,
+    ref: 'Post',
+    required: true
   }
+},
+{
+  timestamps: true,
+  versionKey: false,
 });
 
 export const CommentModel = model("Comment", commentSchema);

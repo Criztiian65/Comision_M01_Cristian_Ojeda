@@ -12,13 +12,17 @@ const PostSchema = new Schema({
     required: true,
   },
   author: {
-    type: String,
-    required: true,
+    type: Schema.Types.ObjectId,
+    ref: 'User',
   },
   imageURL: {
     type: String,
     required: true,
   }
+},
+{
+  timestamps: true,
+  versionKey: false,
 });
 
 export const PostModel = model("Post", PostSchema);

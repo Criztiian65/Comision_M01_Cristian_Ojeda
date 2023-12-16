@@ -3,16 +3,22 @@ import {
   ctrlCreateComment,
   ctrlDeleteComment,
   ctrlGetAllComment,
-  ctrlGetOneComment,
-  ctrlUpdateComment,
+  ctrlUpdateComment
 } from "../controllers/ctrlComment.js";
+
+import { 
+  validationCreateComment, 
+  validationDeleteComment, 
+  validationEditComment 
+} from "../Model/Validations/Comment-Va.js";
 
 const commentsRoutes = Router();
 
-commentsRoutes.post("/new-comment", ctrlCreateComment);     // Registro de nuevo usuario
-commentsRoutes.put("/:commentId", ctrlUpdateComment);       // Actualizar datos de usuario
-commentsRoutes.delete("/:commentId", ctrlDeleteComment);    // Borrar usuario
-commentsRoutes.get("/all-comments", ctrlGetAllComment);     // Buscar todos los usuarios
-commentsRoutes.get("/:commentId", ctrlGetOneComment);       // Perfil de usuario
+commentsRoutes.post("/new-comment", validationCreateComment , ctrlCreateComment);     // Crear un comentario
+commentsRoutes.put("/:commentId", validationEditComment, ctrlUpdateComment);       // Actualizar un comentario
+commentsRoutes.delete("/:commentId", validationDeleteComment, ctrlDeleteComment);    // Borrar comentario
+
+commentsRoutes.get("/all-comments", ctrlGetAllComment);     // Buscar todos los comentarios
+
 
 export { commentsRoutes };

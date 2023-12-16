@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import * as bcrypt from 'bcrypt'
 
 // Creacion del esquema 
 
@@ -21,14 +22,33 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  posts: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Post'
+  }]
+},
+{
+  timestamps: true,
+  versionKey: false,
 });
 
-UserSchema.pre('save', function (next) {
-  if (this.isModified(username)) {
-    this.username = this.username.toLowerCase()
-    this.username = this.username.replace(/[^\w\s]/g, '')
-    
-  }
+
+
+
+UserSchema.pre('save', async function (next) {
+  // if (this.isModified(email)){
+  //   this.email = this.email.replace(/ /g, '');
+  // }
+
+  if (!this.isModified('password')) return next();
+
+  const hash = await bcrypt.hash(this.password, 10);
+
+  this.password = hash;
+
+
+  next();
+  
   
   
 })

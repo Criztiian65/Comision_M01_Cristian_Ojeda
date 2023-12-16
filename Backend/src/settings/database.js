@@ -1,13 +1,12 @@
 import { connect } from 'mongoose'
-import { config } from './config.js'
 
-export const startConnection = async () => {
+export const startConnection = async ({ uri, database }) => {
     try {
         
-        const db = await connect(config.MONGO_URI, {
-            dbName: 'app_viajes',
-        },)
-            console.log('DB is conected to', db.connection.name);
+        const db = await connect(uri, {
+            dbName: database
+        })
+            console.log('DB is conected to ', db.connection.name);
 
     } catch (error) {
         console.log(error);

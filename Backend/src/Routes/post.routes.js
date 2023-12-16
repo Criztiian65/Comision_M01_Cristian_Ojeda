@@ -1,19 +1,27 @@
 import { Router } from "express";
 import {
   ctrlDeletePost,
-  ctrlGetAllPosts,
-  ctrlGetOnePost,
+  ctrlGetAllPostsUser,
+  ctrlGetAllPost,
   ctrlNewPost,
-  ctrlUpdatePost,
+  ctrlUpdatePost
 } from "../controllers/ctrlPost.js";
-import { body } from "express-validator";
+
+import { validateCreatePost,
+  validateDeletePost,
+  validateEditPost, 
+  
+} from "../Model/Validations/Post-Va.js";
+
 
 const postRoutes = Router();
 
-postRoutes.post("/create-post", ctrlNewPost);           // Crea un nuevo post, Valida los datos subidos
-postRoutes.put("/update-post", ctrlUpdatePost);         // Busca el post y lo actualiza según nueva información
-postRoutes.delete("/:commentId", ctrlDeletePost);       // Borra el post segun id
-postRoutes.get("/all-post", ctrlGetAllPosts);           // Buscar todos los post
-postRoutes.get("/one-post", ctrlGetOnePost);         // Buscar un post
+postRoutes.post("/newpost", validateCreatePost , ctrlNewPost);           // Crea un nuevo post, Valida los datos subidos
+postRoutes.put("/updatepost", validateEditPost ,ctrlUpdatePost);         // Busca el post y lo actualiza según nueva información
+postRoutes.delete("/:postId", validateDeletePost ,ctrlDeletePost);       // Borra el post segun id
+
+postRoutes.get("/all-post", ctrlGetAllPostsUser);                            // Buscar todos los post propios
+
+postRoutes.get("/public-posts", ctrlGetAllPost);         // Busca todos los post
 
 export { postRoutes };
