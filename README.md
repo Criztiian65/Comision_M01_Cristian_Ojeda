@@ -1,6 +1,16 @@
 TRABAJO INTEGRADOR FINAL 
 COMISION M01 CRISTIAN OJEDA
 
-Todavia no pude iniciar el proyecto hasta el momento pero de ahora en más tengo tiempo disponible para dedicarme 100% a esto, cualquier consulta se las hago saber por el campus. 
+El backend es lo unico que esta terminado.
+El servidor se levanta con el siguiente codigo
 
-Las clases grabadas de Seba son de muchisima ayuda para el proyecto, es un proyecto completo y de mucha exigencia espero poder lograrlo y alcanzar mis metas con el mismo. Estuve haciendo a la par de este el curso de la UTN quqe se me acoplo por un problema que hubo en Argentina Programa por ese mismo motivo no pude comenzarlo todavia. Espero sepan comprender y de ahora en más dedicasion absoluta a este trabajo.
+npm run dev
+
+el nombre de la base de datos estan en el .env.template
+
+gracias por todo
+
+El trabajo lamentablemente costo un monton, entre la falta de tiempo que e tenido y mi trabajo fue sumamente
+duro la verdad que el proyecto me gusto, pienso terminarlo aprender de backend fue algo increible y espero poder 
+continuar en el curso. El tramo anterior entregue basicamete el front completo con 1 solo compañero esa parte la
+tengo vista. Esta 2da etapa fue un poco mas dura pero con muchos aprendizajes.
