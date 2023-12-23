@@ -37,8 +37,8 @@ export const ctrlLoginUser = async (req, res) => {
     try {
 
         const user = await UserModel.findOne({email: email}, '-__v')
-        if (!user) return res.status(404).json({error: 'El usuario no existe'})
-        // !user && res.status(404).json({error: 'El usuario no existe'}) // prueba
+        // if (!user) return res.status(404).json({error: 'El usuario no existe'})
+        !user && res.status(404).json({error: 'El usuario no existe'}) // prueba
 
         const Mach = await bcrypt.compare(password, user.password)
         
